@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${card.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">贺卡名字：</label>
+								<div class="col-sm-8">
+									<input id="cardName" name="cardName" th:value="${card.cardName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">贺卡标题：</label>
+								<div class="col-sm-8">
+									<input id="title" name="title" th:value="${card.title}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">内容：</label>
+								<div class="col-sm-8">
+									<input id="contentId" name="contentId" th:value="${card.contentId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">模板名字：</label>
+								<div class="col-sm-8">
+									<input id="templateName" name="templateName" th:value="${card.templateName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">模板路径：</label>
+								<div class="col-sm-8">
+									<input id="templateUrl" name="templateUrl" th:value="${card.templateUrl}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">音乐路径：</label>
+								<div class="col-sm-8">
+									<input id="musicName" name="musicName" th:value="${card.musicName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">音乐名字：</label>
+								<div class="col-sm-8">
+									<input id="musicUrl" name="musicUrl" th:value="${card.musicUrl}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<input id="status" name="status" th:value="${card.status}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">头像名称：</label>
+								<div class="col-sm-8">
+									<input id="portaitUrl" name="portaitUrl" th:value="${card.portaitUrl}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/card/card/edit.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.card.dao.TemplateDao">
+
+	<select id="get" resultType="com.bootdo.card.domain.TemplateDO">
+		select `id`,`template_name`,`url`,`content_id`,`content` from h_template where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.card.domain.TemplateDO">
+		select `id`,`template_name`,`url`,`content_id`,`content` from h_template
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="templateName != null and templateName != ''"> and template_name = #{templateName} </if>
+		  		  <if test="url != null and url != ''"> and url = #{url} </if>
+		  		  <if test="contentId != null and contentId != ''"> and content_id = #{contentId} </if>
+		  		  <if test="content != null and content != ''"> and content = #{content} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from h_template
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="templateName != null and templateName != ''"> and template_name = #{templateName} </if>
+		  		  <if test="url != null and url != ''"> and url = #{url} </if>
+		  		  <if test="contentId != null and contentId != ''"> and content_id = #{contentId} </if>
+		  		  <if test="content != null and content != ''"> and content = #{content} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.card.domain.TemplateDO">
+		insert into h_template
+		(
+			`id`, 
+			`template_name`, 
+			`url`, 
+			`content_id`, 
+			`content`
+		)
+		values
+		(
+			#{id}, 
+			#{templateName}, 
+			#{url}, 
+			#{contentId}, 
+			#{content}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.card.domain.TemplateDO">
+		update h_template 
+		<set>
+			<if test="templateName != null">`template_name` = #{templateName}, </if>
+			<if test="url != null">`url` = #{url}, </if>
+			<if test="contentId != null">`content_id` = #{contentId}, </if>
+			<if test="content != null">`content` = #{content}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from h_template where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from h_template where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

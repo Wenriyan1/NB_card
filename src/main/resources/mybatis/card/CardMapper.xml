@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.card.dao.CardDao">
+
+	<select id="get" resultType="com.bootdo.card.domain.CardDO">
+		select `id`,`card_name`,`title`,`card_type`,`content`,`template_id`,`template_name`,`template_url`,`music_id`,`music_name`,`music_url`,`creat_user`,`create_time`,`status`,`portrait_size`,`portait_url` from h_card where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.card.domain.CardDO">
+		select `id`,`card_name`,`title`,`card_type`,`content`,`template_id`,`template_name`,`template_url`,`music_id`,`music_name`,`music_url`,`creat_user`,`create_time`,`status`,`portrait_size`,`portait_url` from h_card
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="cardName != null and cardName != ''"> and card_name = #{cardName} </if>
+		  		  <if test="title != null and title != ''"> and title = #{title} </if>
+		  		  <if test="cardType != null and cardType != ''"> and card_type = #{cardType} </if>
+		  		  <if test="content != null and content != ''"> and content = #{content} </if>
+		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		  		  <if test="templateName != null and templateName != ''"> and template_name = #{templateName} </if>
+		  		  <if test="templateUrl != null and templateUrl != ''"> and template_url = #{templateUrl} </if>
+		  		  <if test="musicId != null and musicId != ''"> and music_id = #{musicId} </if>
+		  		  <if test="musicName != null and musicName != ''"> and music_name = #{musicName} </if>
+		  		  <if test="musicUrl != null and musicUrl != ''"> and music_url = #{musicUrl} </if>
+		  		  <if test="creatUser != null and creatUser != ''"> and creat_user = #{creatUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="portraitSize != null and portraitSize != ''"> and portrait_size = #{portraitSize} </if>
+		  		  <if test="portaitUrl != null and portaitUrl != ''"> and portait_url = #{portaitUrl} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from h_card
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="cardName != null and cardName != ''"> and card_name = #{cardName} </if>
+		  		  <if test="title != null and title != ''"> and title = #{title} </if>
+		  		  <if test="cardType != null and cardType != ''"> and card_type = #{cardType} </if>
+		  		  <if test="content != null and content != ''"> and content = #{content} </if>
+		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		  		  <if test="templateName != null and templateName != ''"> and template_name = #{templateName} </if>
+		  		  <if test="templateUrl != null and templateUrl != ''"> and template_url = #{templateUrl} </if>
+		  		  <if test="musicId != null and musicId != ''"> and music_id = #{musicId} </if>
+		  		  <if test="musicName != null and musicName != ''"> and music_name = #{musicName} </if>
+		  		  <if test="musicUrl != null and musicUrl != ''"> and music_url = #{musicUrl} </if>
+		  		  <if test="creatUser != null and creatUser != ''"> and creat_user = #{creatUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="portraitSize != null and portraitSize != ''"> and portrait_size = #{portraitSize} </if>
+		  		  <if test="portaitUrl != null and portaitUrl != ''"> and portait_url = #{portaitUrl} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.card.domain.CardDO">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual 
+		</selectKey>
+		insert into h_card
+		(	
+			`id`,
+			`card_name`, 
+			`title`, 
+			`card_type`, 
+			`content`, 
+			`template_id`, 
+			`template_name`, 
+			`template_url`, 
+			`music_id`, 
+			`music_name`, 
+			`music_url`, 
+			`creat_user`, 
+			`create_time`, 
+			`status`, 
+			`portrait_size`, 
+			`portait_url`
+		)
+		values
+		(
+			#{id},
+			#{cardName}, 
+			#{title}, 
+			#{cardType}, 
+			#{content}, 
+			#{templateId}, 
+			#{templateName}, 
+			#{templateUrl}, 
+			#{musicId}, 
+			#{musicName}, 
+			#{musicUrl}, 
+			#{creatUser}, 
+			#{createTime}, 
+			#{status}, 
+			#{portraitSize}, 
+			#{portaitUrl}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.card.domain.CardDO">
+		update h_card 
+		<set>
+			<if test="cardName != null">`card_name` = #{cardName}, </if>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="cardType != null">`card_type` = #{cardType}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="templateId != null">`template_id` = #{templateId}, </if>
+			<if test="templateName != null">`template_name` = #{templateName}, </if>
+			<if test="templateUrl != null">`template_url` = #{templateUrl}, </if>
+			<if test="musicId != null">`music_id` = #{musicId}, </if>
+			<if test="musicName != null">`music_name` = #{musicName}, </if>
+			<if test="musicUrl != null">`music_url` = #{musicUrl}, </if>
+			<if test="creatUser != null">`creat_user` = #{creatUser}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="portraitSize != null">`portrait_size` = #{portraitSize}, </if>
+			<if test="portaitUrl != null">`portait_url` = #{portaitUrl}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from h_card where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from h_card where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
